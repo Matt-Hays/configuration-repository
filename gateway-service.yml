@@ -1,0 +1,52 @@
+server:
+  port: 8072
+ 
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eurekaserver:8070/eureka/
+      
+spring:
+  cloud:
+    loadbalancer.ribbon.enabled: false
+    gateway:
+        routes:
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+          - Path=/inventory/**
+          filters:
+          - RewritePath=/inventory/(?<path>.*), /$\{path}
+          - RemoveRequestHeader= Cookie,Set-Cookie
+        - id: loyalty-program-service
+          uri: lb://loyalty-program-service
+          predicates:
+          - Path=/loyalty-program/**
+          filters:
+          - RewritePath=/loyalty-program/(?<path>.*), /$\{path}
+          - RemoveRequestHeader= Cookie,Set-Cookie
+        - id: point-of-sale-service
+          uri: lb://point-of-sale-service
+          predicates:
+          - Path=/point-of-sale/**
+          filters:
+          - RewritePath=/point-of-sale/(?<path>.*), /$\{path}
+          - RemoveRequestHeader= Cookie,Set-Cookie
+        discovery.locator:
+          enabled: true
+          lowerCaseServiceId: true
+   
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    enabled-by-default: true
+        
+        
+        
