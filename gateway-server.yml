@@ -36,6 +36,15 @@ spring:
           filters:
           - RewritePath=/point-of-sale/(?<path>.*), /$\{path}
           - RemoveRequestHeader= Cookie,Set-Cookie
+        - id: keycloak-registration
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth-service/register
+          filters:
+            - name: RedirectTo
+              args:
+                status: "302"
+                url: "http://localhost:8080/admin/realms/master/users"
         discovery.locator:
           enabled: true
           lowerCaseServiceId: true
