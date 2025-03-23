@@ -45,6 +45,7 @@ spring:
               args:
                 status: "302"
                 url: "http://localhost:8080/admin/realms/master/users"
+            - RemoveRequestHeader= Cookie,Set-Cookie
         - id: keycloak-login
           uri: lb://auth-service
           predicates:
@@ -54,6 +55,7 @@ spring:
               args:
                 status: "302"
                 url: "http://localhost:8080/realms/master/protocol/openid-connect/token"
+            - RemoveRequestHeader= Cookie,Set-Cookie
         discovery.locator:
           enabled: true
           lowerCaseServiceId: true
