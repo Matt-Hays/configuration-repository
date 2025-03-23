@@ -37,7 +37,7 @@ spring:
           - RewritePath=/point-of-sale/(?<path>.*), /$\{path}
           - RemoveRequestHeader= Cookie,Set-Cookie
         - id: keycloak-registration
-          uri: lb://auth-service
+          uri: lb://auth-service/register
           predicates:
             - Path=/auth-service/register
           filters:
@@ -47,7 +47,7 @@ spring:
                 url: "http://localhost:8080/admin/realms/master/users"
             - RemoveRequestHeader= Cookie,Set-Cookie
         - id: keycloak-login
-          uri: lb://auth-service
+          uri: lb://auth-service/login
           predicates:
             - Path=/auth-service/login
           filters:
