@@ -53,7 +53,7 @@ spring:
           filters:
             - name: RedirectTo
               args:
-                status: "302"
+                status: "307"
                 url: "http://localhost:8080/realms/master/protocol/openid-connect/token"
             - RemoveRequestHeader= Cookie,Set-Cookie
         discovery.locator:
