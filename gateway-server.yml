@@ -43,7 +43,7 @@ spring:
           filters:
             - name: RedirectTo
               args:
-                status: "302"
+                status: "307"
                 url: "http://localhost:8080/admin/realms/master/users"
             - RemoveRequestHeader= Cookie,Set-Cookie
         - id: keycloak-login
